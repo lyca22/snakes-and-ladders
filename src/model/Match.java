@@ -21,7 +21,7 @@ public class Match {
 	}
 
 	public void startGame() {
-		
+
 	}
 
 	public void addPlayerToPlayerList() {
@@ -29,11 +29,11 @@ public class Match {
 	}
 
 	public void movePlayer() {
-		
+
 	}
 
 	public void finishGame() {
-		
+
 	}
 
 	public int getBoardWidth() {

@@ -6,7 +6,7 @@ public class Field {
 	private Field next;
 	private Field snake;
 	private Field ladder;
-	
+
 	public Field(int fieldNumber) {
 		setFieldNumber(fieldNumber);
 	}

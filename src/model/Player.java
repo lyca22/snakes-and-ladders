@@ -9,7 +9,7 @@ public class Player {
 	private Player left;
 	private Player next;
 	private Field position;
-	
+
 	public Player(char symbol) {
 		setSymbol(symbol);
 	}
@@ -17,7 +17,7 @@ public class Player {
 	public int calculateScore() {
 		return 0;
 	}
-	
+
 	public char getSymbol() {
 		return symbol;
 	}
@@ -73,5 +73,5 @@ public class Player {
 	public void setPosition(Field position) {
 		this.position = position;
 	}
-	
+
 }
