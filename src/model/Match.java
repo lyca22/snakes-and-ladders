@@ -102,12 +102,22 @@ public class Match {
 		return (int)(Math.random() * range) + min;
 	}
 
-	public void addPlayerToPlayerList() {
-		//Recursion
+	//Not sure if this method works. It requires testing.
+	
+	public void addPlayerToPlayerList(Player first, char symbol) {
+		Player player = new Player(symbol);
+		player.setPosition(getFirst());
+		if(first == null) {
+			first = player;
+		}else {
+			addPlayerToPlayerList(first.getNext(), symbol);
+		}
 	}
 
-	public void movePlayer() {
-
+	public void movePlayer(Player player, int fieldAmount) {
+		Field actualField = player.getPosition();
+		Field newField = searchField(actualField, fieldAmount);
+		player.setPosition(newField);
 	}
 
 	public void finishGame() {
