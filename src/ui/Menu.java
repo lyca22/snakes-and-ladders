@@ -17,7 +17,7 @@ public class Menu {
 		snakesAndLadders = new SnakesAndLadders();
 	}
 
-	public void showMenu(){
+	public static void showMenu(){
 		System.out.println("Escoja una de las siguientes opciones:");
 		System.out.println("1) Para iniciar una partida");
 		System.out.println("2) Para ver el tablero de posiciones");
@@ -34,6 +34,7 @@ public class Menu {
 
 	public void mainInfo(String separator) {
 		String firstEntry = sc.nextLine();
+		separator = " "; 
 		if(firstEntry != null) {
 			String[] gameValues = firstEntry.split(separator);
 			int boardWidth = Integer.parseInt(gameValues[0]);
@@ -82,6 +83,13 @@ public class Menu {
 
 	}
 
+	public static void backToMenu(Match match) {
+		String back = sc.nextLine();
+		if(back.equals("menu")) {
+			match.setHasEnded(true);
+			showMenu();
+		}
+	}
 
 	public void doOperation(int choice) {
 		switch (choice){
