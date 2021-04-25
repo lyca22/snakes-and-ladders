@@ -25,7 +25,7 @@ public class Menu {
 
 	}
 
-	public int readOption(){
+	public static int readOption(){
 		int choice = sc.nextInt();
 		sc.nextLine();
 		return choice;
@@ -87,11 +87,21 @@ public class Menu {
 		String back = sc.nextLine();
 		if(back.equals("menu")) {
 			match.setHasEnded(true);
-			showMenu();
+			startProgram();
 		}
 	}
 
-	public void doOperation(int choice) {
+	
+	public static void askNickname(Match match) {
+		match.getWinner();
+		System.out.println("Ingrese su nombre/nickname:");
+		String nickname = sc.nextLine();
+		match.getWinner().setNickname(nickname);
+	}
+	
+	
+	
+	public static void doOperation(int choice) {
 		switch (choice){
 		case PLAY:
 			break;
@@ -104,8 +114,10 @@ public class Menu {
 
 		}
 	}
-
-	public void startProgram() {
+	
+	
+//HACERLO RECURSIVO
+	public static void startProgram() {
 		int option;
 		do{
 			showMenu();
@@ -114,5 +126,3 @@ public class Menu {
 		}while (option!=3);
 	}
 }
-
-
