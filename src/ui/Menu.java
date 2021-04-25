@@ -43,14 +43,14 @@ public class Menu {
 
 			try {
 				int playerAmount = Integer.parseInt(gameValues[4]);
-				assignSymbols(playerAmount, 0, match);
 				match = new Match(boardWidth, boardLength, snakeAmount, ladderAmount, playerAmount);
+				assignSymbols(playerAmount, 0, match);
 
 			} catch (Exception e) {
 				String symbols = gameValues[4];
 				int playerAmount = symbols.length();
-				assignSymbols(playerAmount, 0, match, symbols);
 				match = new Match(boardWidth, boardLength, snakeAmount, ladderAmount, playerAmount);
+				assignSymbols(playerAmount, 0, match, symbols);
 			}
 
 		}
@@ -58,11 +58,9 @@ public class Menu {
 
 	public static void assignSymbols(int playerAmount, int index, Match match, String symbols) {
 		char symbol;
-
 		if(playerAmount > 0) {
-			symbol= symbols.charAt(index);
-			Player player = new Player (symbol);
-			match.addPlayerToPlayerList(player, symbol);
+			symbol = symbols.charAt(index);
+			match.addPlayer(symbol);
 			assignSymbols(playerAmount-1, index+1, match);
 
 		}
@@ -70,15 +68,15 @@ public class Menu {
 	}
 
 	public static void assignSymbols(int playerAmount, int index, Match match) {
-		String symbols="*!OX%$#+&";
+		String symbols = "*!OX%$#+&";
 		char symbol;
 		if(playerAmount > symbols.length()) {
-			playerAmount=symbols.length();
+			playerAmount = symbols.length();
+			match.setPlayerAmount(playerAmount);
 		}
 		if(playerAmount > 0) {
-			symbol= symbols.charAt(index);
-			Player player = new Player (symbol);
-			match.addPlayerToPlayerList(player, symbol);
+			symbol = symbols.charAt(index);
+			match.addPlayer(symbol);
 			assignSymbols(playerAmount-1, index+1, match);
 		}
 

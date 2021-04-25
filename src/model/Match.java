@@ -127,7 +127,7 @@ public class Match {
 		}
 	}
 	
-	public void addPlayer(Player current, Player newPlayer) {
+	private void addPlayer(Player current, Player newPlayer) {
 		if(current.getNext() == null) {
 			current.setNext(newPlayer);
 		}else {
