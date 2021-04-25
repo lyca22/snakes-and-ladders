@@ -5,6 +5,7 @@ public class Player {
 	private char symbol;
 	private String nickname;
 	private int score;
+	private int moves;
 	private Player right;
 	private Player left;
 	private Player next;
@@ -14,8 +15,8 @@ public class Player {
 		setSymbol(symbol);
 	}
 
-	public int calculateScore() {
-		return 0;
+	public int calculateScore(int fieldAmount) {
+		return fieldAmount*moves;
 	}
 
 	public char getSymbol() {
@@ -40,6 +41,14 @@ public class Player {
 
 	public void setScore(int score) {
 		this.score = score;
+	}
+
+	public int getMoves() {
+		return moves;
+	}
+
+	public void setMoves(int moves) {
+		this.moves = moves;
 	}
 
 	public Player getRight() {

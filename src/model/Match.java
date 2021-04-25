@@ -10,9 +10,10 @@ public class Match {
 	private int snakeAmount;
 	private int ladderAmount;
 	private int playerAmount;
-	private Player players;
 	private Field first;
-	private Match next;
+	private Player firstPlayer;
+	private boolean hasEnded;
+	private Player winner;
 
 	public Match(int boardWidth, int boardLength, int snakeAmount, int ladderAmount, int playerAmount) {
 		setBoardWidth(boardWidth);
@@ -20,25 +21,40 @@ public class Match {
 		setSnakeAmount(snakeAmount);
 		setLadderAmount(ladderAmount);
 		setPlayerAmount(playerAmount);
+		setHasEnded(false);
 	}
 
 	public void startGame() {
 		int fieldAmount = boardWidth * boardLength;
-		createBoard(fieldAmount, FIRST_FIELD_NUMBER, first);
+		createBoard(fieldAmount, FIRST_FIELD_NUMBER);
 		addAllSnakes(snakeAmount, fieldAmount, DEFAULT_ATTEMPTS);
 		addAllLadders(ladderAmount, fieldAmount, DEFAULT_ATTEMPTS);
 	}
-
-	//Not sure if this method works. It requires testing.
-
-	public void createBoard(int fieldAmount, int fieldNumber, Field lastField) {
+	
+	public void createBoard(int fieldAmount, int fieldNumber) {
+		if(fieldAmount > 0) {
+			addField(fieldNumber);
+			createBoard(fieldAmount-1, fieldNumber+1);
+		}
+	}
+	
+	public void addField(int fieldNumber) {
 		Field toAddField = new Field(fieldNumber);
-		if(lastField == null && fieldAmount > 0) {
-			lastField = toAddField;
-			createBoard(fieldAmount-1, fieldNumber+1, lastField.getNext());
+		if(first == null) {
+			first = toAddField;
+		}else {
+			addField(first, toAddField);
 		}
 	}
 
+	public void addField(Field current, Field toAddField) {
+		if(current.getNext() == null) {
+			current.setNext(toAddField);
+		}else {
+			addField(current.getNext(), toAddField);
+		}
+	}
+	
 	public Field searchField(Field lastField, int position) {
 		Field nextField;
 		if((position-1) > 0) {
@@ -101,27 +117,39 @@ public class Match {
 		int range = (max - min) + 1;
 		return (int)(Math.random() * range) + min;
 	}
-
-	//Not sure if this method works. It requires testing.
 	
-	public void addPlayerToPlayerList(Player first, char symbol) {
-		Player player = new Player(symbol);
-		player.setPosition(getFirst());
-		if(first == null) {
-			first = player;
+	public void addPlayer(char symbol) {
+		Player newPlayer = new Player(symbol);
+		if(firstPlayer == null) {
+			firstPlayer = newPlayer;
 		}else {
-			addPlayerToPlayerList(first.getNext(), symbol);
+			addPlayer(firstPlayer, newPlayer);
 		}
 	}
-
-	public void movePlayer(Player player, int fieldAmount) {
-		Field actualField = player.getPosition();
-		Field newField = searchField(actualField, fieldAmount);
-		player.setPosition(newField);
+	
+	public void addPlayer(Player current, Player newPlayer) {
+		if(current.getNext() == null) {
+			current.setNext(newPlayer);
+		}else {
+			addPlayer(current.getNext(), newPlayer);
+		}
 	}
-
-	public void finishGame() {
-
+	
+	public void movePlayer(Player player, int moves, int fieldAmount) {
+		Field actualField = player.getPosition();
+		Field newField = searchField(actualField, moves);
+		if(newField.getSnake() == null && newField.getLadder() == null) {
+			player.setPosition(newField);
+		}else if(newField.getSnake() != null){
+			player.setPosition(newField.getSnake());
+		}else {
+			player.setPosition(newField.getLadder());
+		}
+		if(player.getPosition().getFieldNumber() == fieldAmount) {
+			setWinner(player);
+			setHasEnded(true);
+			player.setScore(player.calculateScore(fieldAmount));
+		}
 	}
 
 	public int getBoardWidth() {
@@ -164,14 +192,6 @@ public class Match {
 		this.playerAmount = playerAmount;
 	}
 
-	public Player getPlayers() {
-		return players;
-	}
-
-	public void setPlayers(Player players) {
-		this.players = players;
-	}
-
 	public Field getFirst() {
 		return first;
 	}
@@ -180,12 +200,28 @@ public class Match {
 		this.first = first;
 	}
 
-	public Match getNext() {
-		return next;
+	public Player getFirstPlayer() {
+		return firstPlayer;
 	}
 
-	public void setNext(Match next) {
-		this.next = next;
+	public void setFirstPlayer(Player firstPlayer) {
+		this.firstPlayer = firstPlayer;
+	}
+
+	public boolean hasEnded() {
+		return hasEnded;
+	}
+
+	public void setHasEnded(boolean hasEnded) {
+		this.hasEnded = hasEnded;
+	}
+
+	public Player getWinner() {
+		return winner;
+	}
+
+	public void setWinner(Player winner) {
+		this.winner = winner;
 	}
 
 }
