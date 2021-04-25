@@ -11,6 +11,7 @@ public class Menu {
 
 	private static Scanner sc = new Scanner(System.in);
 	SnakesAndLadders snakesAndLadders;
+	Match match;
 
 	public Menu(){
 		snakesAndLadders = new SnakesAndLadders();
@@ -29,6 +30,60 @@ public class Menu {
 		sc.nextLine();
 		return choice;
 	}
+
+
+	public void mainInfo(String separator) {
+		String firstEntry = sc.nextLine();
+		if(firstEntry != null) {
+			String[] gameValues = firstEntry.split(separator);
+			int boardWidth = Integer.parseInt(gameValues[0]);
+			int boardLength = Integer.parseInt(gameValues[1]);
+			int snakeAmount = Integer.parseInt(gameValues[2]);
+			int ladderAmount = Integer.parseInt(gameValues[3]);
+
+			try {
+				int playerAmount = Integer.parseInt(gameValues[4]);
+				assignSymbols(playerAmount, 0, match);
+				match = new Match(boardWidth, boardLength, snakeAmount, ladderAmount, playerAmount);
+
+			} catch (Exception e) {
+				String symbols = gameValues[4];
+				int playerAmount = symbols.length();
+				assignSymbols(playerAmount, 0, match, symbols);
+				match = new Match(boardWidth, boardLength, snakeAmount, ladderAmount, playerAmount);
+			}
+
+		}
+	}
+
+	public static void assignSymbols(int playerAmount, int index, Match match, String symbols) {
+		char symbol;
+
+		if(playerAmount > 0) {
+			symbol= symbols.charAt(index);
+			Player player = new Player (symbol);
+			match.addPlayerToPlayerList(player, symbol);
+			assignSymbols(playerAmount-1, index+1, match);
+
+		}
+
+	}
+
+	public static void assignSymbols(int playerAmount, int index, Match match) {
+		String symbols="*!OX%$#+&";
+		char symbol;
+		if(playerAmount > symbols.length()) {
+			playerAmount=symbols.length();
+		}
+		if(playerAmount > 0) {
+			symbol= symbols.charAt(index);
+			Player player = new Player (symbol);
+			match.addPlayerToPlayerList(player, symbol);
+			assignSymbols(playerAmount-1, index+1, match);
+		}
+
+	}
+
 
 	public void doOperation(int choice) {
 		switch (choice){
