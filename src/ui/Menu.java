@@ -11,7 +11,7 @@ public class Menu {
 
 	private static Scanner sc = new Scanner(System.in);
 	SnakesAndLadders snakesAndLadders;
-	static Match match;
+
 
 	public Menu(){
 		snakesAndLadders = new SnakesAndLadders();
@@ -32,7 +32,7 @@ public class Menu {
 	}
 
 
-	public Match mainInfo() {
+	public void mainInfo() {
 		String firstEntry = sc.nextLine();
 		String separator = " "; 
 		if(firstEntry != null) {
@@ -44,19 +44,20 @@ public class Menu {
 
 			try {
 				int playerAmount = Integer.parseInt(gameValues[4]);
-				match = new Match(boardWidth, boardLength, snakeAmount, ladderAmount, playerAmount);
+				Match match = new Match(boardWidth, boardLength, snakeAmount, ladderAmount, playerAmount);
+				snakesAndLadders.setMatch(match);
 				assignSymbols(playerAmount, 0, match);
 
 			} catch (Exception e) {
 				String symbols = gameValues[4];
 				int playerAmount = symbols.length();
-				match = new Match(boardWidth, boardLength, snakeAmount, ladderAmount, playerAmount);
+				Match match = new Match(boardWidth, boardLength, snakeAmount, ladderAmount, playerAmount);
+				snakesAndLadders.setMatch(match);
 				assignSymbols(playerAmount, 0, match, symbols);
 			}
 
 		}
 
-		return match;
 	}
 
 	public void assignSymbols(int playerAmount, int index, Match match, String symbols) {
@@ -85,38 +86,52 @@ public class Menu {
 
 	}
 
-	public void backToMenu(Match match) {
-		match.setHasEnded(true);
-		startProgram();
-	}
 
 
-	public void askNickname(Match match) {
-		match.getWinner();
+	public void askNickname(boolean score) {
+		if(score) {
+		snakesAndLadders.getMatch().getWinner();
 		System.out.println("Ingrese su nombre/nickname:");
 		String nickname = sc.nextLine();
-		match.getWinner().setNickname(nickname);
+		snakesAndLadders.getMatch().getWinner().setNickname(nickname);
+		}
 	}
 
 
 	public void start() {
-		Match match = mainInfo();
-		match.startGame();
-
-		if(!match.hasEnded()) {
-			String entry = sc.nextLine();
-			if(entry.equalsIgnoreCase("menu")) {
-				backToMenu(match);
-				match.setHasEnded(true);
-			}else if(entry.equalsIgnoreCase("simul")) {
-				//simul
-			}else {
-				//
-			}
-		}
-		askNickname(match);
+		mainInfo();
+		snakesAndLadders.getMatch().startGame();
+		snakesAndLadders.getMatch().boardToString(snakesAndLadders.getMatch().getFirst(),snakesAndLadders.getMatch().getFieldAmount(), false);
+		snakesAndLadders.getMatch().boardToString(snakesAndLadders.getMatch().getFirst(), snakesAndLadders.getMatch().getFieldAmount(), true);
+		boolean getScores = gameLoop(1);
+		askNickname(getScores);
 	}
 
+
+	public boolean gameLoop(int turn) {
+		boolean getScores = false; 
+		if(!snakesAndLadders.getMatch().hasEnded()) {
+			String entry = sc.nextLine();
+			if(entry.equalsIgnoreCase("menu")) {
+				snakesAndLadders.getMatch().setHasEnded(true);
+			}else if(entry.equalsIgnoreCase("simul")) {
+				getScores = true;
+				//simul
+			}else {
+				snakesAndLadders.getMatch().movePlayers(turn,snakesAndLadders.getMatch().getFieldAmount());
+				snakesAndLadders.getMatch().boardToString(snakesAndLadders.getMatch().getFirst(), snakesAndLadders.getMatch().getFieldAmount(), true);
+				getScores = true;
+			}
+			getScores = gameLoop(turn+1);
+		}
+		return getScores;
+	}
+
+
+	
+	public void simulation() {
+		
+	}
 
 	public void doOperation(int choice, Match match) {
 		switch (choice){
@@ -140,7 +155,7 @@ public class Menu {
 		do{
 			showMenu();
 			option = readOption();
-			doOperation(option,match);
+			doOperation(option,snakesAndLadders.getMatch());
 		}while (option!=3);
 	}
 }
