@@ -11,13 +11,13 @@ public class Menu {
 
 	private static Scanner sc = new Scanner(System.in);
 	SnakesAndLadders snakesAndLadders;
-	Match match;
+	static Match match;
 
 	public Menu(){
 		snakesAndLadders = new SnakesAndLadders();
 	}
 
-	public static void showMenu(){
+	public void showMenu(){
 		System.out.println("Escoja una de las siguientes opciones:");
 		System.out.println("1) Para iniciar una partida");
 		System.out.println("2) Para ver el tablero de posiciones");
@@ -25,16 +25,16 @@ public class Menu {
 
 	}
 
-	public static int readOption(){
+	public int readOption(){
 		int choice = sc.nextInt();
 		sc.nextLine();
 		return choice;
 	}
 
 
-	public void mainInfo(String separator) {
+	public Match mainInfo() {
 		String firstEntry = sc.nextLine();
-		separator = " "; 
+		String separator = " "; 
 		if(firstEntry != null) {
 			String[] gameValues = firstEntry.split(separator);
 			int boardWidth = Integer.parseInt(gameValues[0]);
@@ -55,9 +55,11 @@ public class Menu {
 			}
 
 		}
+
+		return match;
 	}
 
-	public static void assignSymbols(int playerAmount, int index, Match match, String symbols) {
+	public void assignSymbols(int playerAmount, int index, Match match, String symbols) {
 		char symbol;
 		if(playerAmount > 0) {
 			symbol = symbols.charAt(index);
@@ -68,7 +70,7 @@ public class Menu {
 
 	}
 
-	public static void assignSymbols(int playerAmount, int index, Match match) {
+	public void assignSymbols(int playerAmount, int index, Match match) {
 		String symbols = "*!OX%$#+&";
 		char symbol;
 		if(playerAmount > symbols.length()) {
@@ -83,27 +85,43 @@ public class Menu {
 
 	}
 
-	public static void backToMenu(Match match) {
-		String back = sc.nextLine();
-		if(back.equals("menu")) {
-			match.setHasEnded(true);
-			startProgram();
-		}
+	public void backToMenu(Match match) {
+		match.setHasEnded(true);
+		startProgram();
 	}
 
-	
-	public static void askNickname(Match match) {
+
+	public void askNickname(Match match) {
 		match.getWinner();
 		System.out.println("Ingrese su nombre/nickname:");
 		String nickname = sc.nextLine();
 		match.getWinner().setNickname(nickname);
 	}
-	
-	
-	
-	public static void doOperation(int choice) {
+
+
+	public void start() {
+		Match match = mainInfo();
+		match.startGame();
+
+		if(!match.hasEnded()) {
+			String entry = sc.nextLine();
+			if(entry.equalsIgnoreCase("menu")) {
+				backToMenu(match);
+				match.setHasEnded(true);
+			}else if(entry.equalsIgnoreCase("simul")) {
+				//simul
+			}else {
+				//
+			}
+		}
+		askNickname(match);
+	}
+
+
+	public void doOperation(int choice, Match match) {
 		switch (choice){
 		case PLAY:
+			start();
 			break;
 		case SCORE_BOARD:
 			break;
@@ -114,15 +132,15 @@ public class Menu {
 
 		}
 	}
-	
-	
-//HACERLO RECURSIVO
-	public static void startProgram() {
+
+
+	//HACERLO RECURSIVO
+	public void startProgram() {
 		int option;
 		do{
 			showMenu();
 			option = readOption();
-			doOperation(option);
+			doOperation(option,match);
 		}while (option!=3);
 	}
 }
