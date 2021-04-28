@@ -8,6 +8,10 @@ public class SnakesAndLadders {
 	public SnakesAndLadders() {
 	}
 
+	public void addScores() {
+		addScores(match.getWinner());
+	}
+	
 	public void addScores(Player player) {
 		if(root == null) {
 			root = player;
@@ -39,6 +43,12 @@ public class SnakesAndLadders {
 	public String getScores(Player current) {
 		String text = "";
 		if(current.getLeft() == null && current.getRight() == null) {
+			text += current.getScore() + " ";
+		}else if(current.getLeft() == null) {
+			text += current.getScore() + " ";
+			text += getScores(current.getRight());
+		}else if(current.getRight() == null){
+			text += getScores(current.getLeft());
 			text += current.getScore() + " ";
 		}else {
 			text += getScores(current.getLeft());

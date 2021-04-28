@@ -182,6 +182,7 @@ public class Match {
 		}else {
 			player.setPosition(newField.getLadder());
 		}
+		player.setMoves(player.getMoves()+moves);
 		if(player.getPosition().getFieldNumber() == fieldAmount) {
 			setWinner(player);
 			setHasEnded(true);

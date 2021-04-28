@@ -13,6 +13,9 @@ public class Player {
 
 	public Player(char symbol) {
 		setSymbol(symbol);
+		setNickname("");
+		setScore(0);
+		setMoves(0);
 	}
 
 	public int calculateScore(int fieldAmount) {
