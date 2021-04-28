@@ -8,10 +8,11 @@ public class Match {
 	private final static int FIRST_LADDER_SYMBOL = 1;
 	private final static int MIN_MOVE_VALUE = 1;
 	private final static int MAX_MOVE_VALUE = 6;
-	
+
 
 	private int boardWidth;
 	private int boardLength;
+	private int fieldAmount;
 	private int snakeAmount;
 	private int ladderAmount;
 	private int playerAmount;
@@ -23,6 +24,7 @@ public class Match {
 	public Match(int boardWidth, int boardLength, int snakeAmount, int ladderAmount, int playerAmount) {
 		setBoardWidth(boardWidth);
 		setBoardLength(boardLength);
+		setFieldAmount(boardWidth*boardLength);
 		setSnakeAmount(snakeAmount);
 		setLadderAmount(ladderAmount);
 		setPlayerAmount(playerAmount);
@@ -63,8 +65,12 @@ public class Match {
 	public Field searchField(Field lastField, int position) {
 		Field nextField;
 		if((position-1) > 0) {
-			nextField = lastField.getNext();
-			lastField = searchField(nextField, position-1);
+			if(lastField.getFieldNumber() + position-1 <= fieldAmount) {
+				nextField = lastField.getNext();
+				lastField = searchField(nextField, position-1);
+			}else {
+				lastField = searchField(lastField, position-1);
+			}
 		}
 		return lastField;
 	}
@@ -169,7 +175,7 @@ public class Match {
 		}
 		Player actualPlayer = getPlayer(firstPlayer, position);
 		int moves = randomNumberWithRange(MIN_MOVE_VALUE, MAX_MOVE_VALUE);
-		movePlayer(actualPlayer, moves, fieldAmount);
+		movePlayer(actualPlayer, moves+1, fieldAmount);
 	}
 
 	public void movePlayer(Player player, int moves, int fieldAmount) {
@@ -277,6 +283,14 @@ public class Match {
 
 	public void setBoardLength(int boardLength) {
 		this.boardLength = boardLength;
+	}
+
+	public int getFieldAmount() {
+		return fieldAmount;
+	}
+
+	public void setFieldAmount(int fieldAmount) {
+		this.fieldAmount = fieldAmount;
 	}
 
 	public int getSnakeAmount() {

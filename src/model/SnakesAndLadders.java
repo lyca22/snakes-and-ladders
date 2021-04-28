@@ -11,7 +11,7 @@ public class SnakesAndLadders {
 	public void addScores() {
 		addScores(match.getWinner());
 	}
-	
+
 	public void addScores(Player player) {
 		if(root == null) {
 			root = player;
@@ -19,7 +19,7 @@ public class SnakesAndLadders {
 			addScores(root, player);
 		}
 	}
-	
+
 	public void addScores(Player current, Player player) {
 		if(player.getScore() <= current.getScore()) {
 			if(current.getLeft() == null) {
@@ -57,7 +57,7 @@ public class SnakesAndLadders {
 		}
 		return text;
 	}
-	
+
 	public Match getMatch() {
 		return match;
 	}
