@@ -6,6 +6,8 @@ public class Field {
 	private Field next;
 	private Field snake;
 	private Field ladder;
+	private Field parent;
+	private String symbol;
 
 	public Field(int fieldNumber) {
 		setFieldNumber(fieldNumber);
@@ -41,6 +43,22 @@ public class Field {
 
 	public void setLadder(Field ladder) {
 		this.ladder = ladder;
+	}
+
+	public Field getParent() {
+		return parent;
+	}
+
+	public void setParent(Field parent) {
+		this.parent = parent;
+	}
+
+	public String getSymbol() {
+		return symbol;
+	}
+
+	public void setSymbol(String symbol) {
+		this.symbol = symbol;
 	}
 
 }
