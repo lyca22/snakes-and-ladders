@@ -9,7 +9,6 @@ public class Match {
 	private final static int MIN_MOVE_VALUE = 1;
 	private final static int MAX_MOVE_VALUE = 6;
 
-
 	private int boardWidth;
 	private int boardLength;
 	private int fieldAmount;
@@ -188,7 +187,7 @@ public class Match {
 		}else {
 			player.setPosition(newField.getLadder());
 		}
-		player.setMoves(player.getMoves()+moves);
+		player.setMoves(player.getMoves()+1);
 		if(player.getPosition().getFieldNumber() == fieldAmount) {
 			setWinner(player);
 			setHasEnded(true);
@@ -196,6 +195,10 @@ public class Match {
 		}
 	}
 
+	public String boardToString(boolean showPlayers) {
+		return boardToString(getFirst(), getFieldAmount(), showPlayers);
+	}
+	
 	public String boardToString(Field lastField, int fieldAmount, boolean showPlayers) {
 		String text = "";
 		Field nextField;

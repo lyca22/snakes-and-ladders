@@ -1,161 +1,185 @@
 package ui;
-import model.*;
 
 import java.util.Scanner;
+
+import model.Match;
+import model.SnakesAndLadders;
 
 public class Menu {
 
 	private final static int PLAY = 1;
-	private final static int SCORE_BOARD = 2;
+	private final static int SCOREBOARD = 2;
 	private final static int EXIT = 3;
+	private final static int FIRST_TURN = 1;
+	private final static boolean SHOW_FIELD_NUMBERS = false;
+	private final static boolean SHOW_PLAYERS = true;
+	
+	private SnakesAndLadders sal;
+	private Scanner sc;
 
-	private static Scanner sc = new Scanner(System.in);
-	SnakesAndLadders snakesAndLadders;
-
-
-	public Menu(){
-		snakesAndLadders = new SnakesAndLadders();
+	public Menu() {
+		setSal(new SnakesAndLadders());
+		sc = new Scanner(System.in);
 	}
 
-	public void showMenu(){
-		System.out.println("Escoja una de las siguientes opciones:");
-		System.out.println("1) Para iniciar una partida");
-		System.out.println("2) Para ver el tablero de posiciones");
-		System.out.println("3) Salir");
-
+	public void startProgram() {
+		showMenu();
+		int option = readOption();
+		doOperation(option);
+		if(option != EXIT) {
+			startProgram();
+		}
 	}
 
-	public int readOption(){
-		int choice = sc.nextInt();
-		sc.nextLine();
-		return choice;
+	public void showMenu() {
+		String text = "1. Play the game.\n";
+		text += "2. Show scoreboard.\n";
+		text += "3. Exit the game.\n\n";
+		text += "Please select an option.\n";
+		System.out.println(text);
 	}
 
+	public int readOption() {
+		int option;
+		try {
+			option = Integer.valueOf(sc.nextLine());
+		}catch(Exception e) {
+			option = -1;
+			System.out.println("Please select an option. Press any key to continue.\n");
+			sc.nextLine();
+		}
+		return option;
+	}
 
-	public void mainInfo() {
-		String firstEntry = sc.nextLine();
-		String separator = " "; 
-		if(firstEntry != null) {
-			String[] gameValues = firstEntry.split(separator);
+	public void doOperation(int option) {
+		switch(option) {
+		case PLAY:
+			try {
+				startGame();
+			} catch (Exception e) {
+				e.printStackTrace();
+				System.out.println("Please enter the required information. Press any key to continue.\n");
+				sc.nextLine();
+			}
+			break;
+		case SCOREBOARD:
+			showScores();
+			break;
+		case EXIT:
+			System.out.println("Game closed. Press any key to continue.\n");
+			sc.nextLine();
+			break;
+		}
+	}
+
+	public void startGame() throws Exception {
+		getGameInformation();
+		Match currentMatch = sal.getMatch();
+		System.out.println("\n" + currentMatch.boardToString(SHOW_FIELD_NUMBERS) + "\n");
+		System.out.println(currentMatch.boardToString(SHOW_PLAYERS)+ "\n");
+		boolean saveScore = executeGameLoop(currentMatch, FIRST_TURN);
+		saveScore(saveScore, currentMatch);
+	}
+
+	public void getGameInformation() {
+		System.out.println("Enter width, length, snake amount, ladder amount and player amount or their symbols.");
+		String userEntry = sc.nextLine();
+		if(userEntry != null) {
+			String[] gameValues = userEntry.split(" ");
 			int boardWidth = Integer.parseInt(gameValues[0]);
 			int boardLength = Integer.parseInt(gameValues[1]);
 			int snakeAmount = Integer.parseInt(gameValues[2]);
 			int ladderAmount = Integer.parseInt(gameValues[3]);
-
+			int playerAmount;
+			String symbols;
 			try {
-				int playerAmount = Integer.parseInt(gameValues[4]);
-				Match match = new Match(boardWidth, boardLength, snakeAmount, ladderAmount, playerAmount);
-				snakesAndLadders.setMatch(match);
-				assignSymbols(playerAmount, 0, match);
-
-			} catch (Exception e) {
-				String symbols = gameValues[4];
-				int playerAmount = symbols.length();
-				Match match = new Match(boardWidth, boardLength, snakeAmount, ladderAmount, playerAmount);
-				snakesAndLadders.setMatch(match);
-				assignSymbols(playerAmount, 0, match, symbols);
+				symbols = "*!OX%$#+&";
+				playerAmount = Integer.parseInt(gameValues[4]);
+			}catch(Exception e) {
+				symbols = gameValues[4];
+				playerAmount = symbols.length();
 			}
-
+			Match match = new Match(boardWidth, boardLength, snakeAmount, ladderAmount, playerAmount);
+			sal.setMatch(match);
+			sal.getMatch().startGame();
+			addPlayers(symbols, playerAmount);
+		}else {
+			getGameInformation();
 		}
-
 	}
 
-	public void assignSymbols(int playerAmount, int index, Match match, String symbols) {
-		char symbol;
-		if(playerAmount > 0) {
-			symbol = symbols.charAt(index);
-			match.addPlayer(symbol);
-			assignSymbols(playerAmount-1, index+1, match);
-
-		}
-
+	public void addPlayers(String symbols, int playerAmount) {
+		addPlayers(symbols, playerAmount, 0);
 	}
 
-	public void assignSymbols(int playerAmount, int index, Match match) {
-		String symbols = "*!OX%$#+&";
+	public void addPlayers(String symbols, int playerAmount, int index) {
 		char symbol;
 		if(playerAmount > symbols.length()) {
 			playerAmount = symbols.length();
-			match.setPlayerAmount(playerAmount);
+			sal.getMatch().setPlayerAmount(playerAmount);
 		}
 		if(playerAmount > 0) {
 			symbol = symbols.charAt(index);
-			match.addPlayer(symbol);
-			assignSymbols(playerAmount-1, index+1, match);
-		}
-
-	}
-
-
-
-	public void askNickname(boolean score) {
-		if(score) {
-		snakesAndLadders.getMatch().getWinner();
-		System.out.println("Ingrese su nombre/nickname:");
-		String nickname = sc.nextLine();
-		snakesAndLadders.getMatch().getWinner().setNickname(nickname);
+			sal.getMatch().addPlayer(symbol);
+			addPlayers(symbols, playerAmount-1, index+1);
 		}
 	}
-
-
-	public void start() {
-		mainInfo();
-		snakesAndLadders.getMatch().startGame();
-		snakesAndLadders.getMatch().boardToString(snakesAndLadders.getMatch().getFirst(),snakesAndLadders.getMatch().getFieldAmount(), false);
-		snakesAndLadders.getMatch().boardToString(snakesAndLadders.getMatch().getFirst(), snakesAndLadders.getMatch().getFieldAmount(), true);
-		boolean getScores = gameLoop(1);
-		askNickname(getScores);
-	}
-
-
-	public boolean gameLoop(int turn) {
-		boolean getScores = false; 
-		if(!snakesAndLadders.getMatch().hasEnded()) {
+	
+	public boolean executeGameLoop(Match currentMatch, int turn) {
+		boolean saveScore = false;
+		if(!currentMatch.hasEnded()) {
+			System.out.println("Press enter to make a move, enter 'menu' to end the game and go to the menu, enter simul to enable simulation mode, enter num to see the numerated board.");
 			String entry = sc.nextLine();
 			if(entry.equalsIgnoreCase("menu")) {
-				snakesAndLadders.getMatch().setHasEnded(true);
+				currentMatch.setHasEnded(true);
+				System.out.println();
+				turn = turn-1;
 			}else if(entry.equalsIgnoreCase("simul")) {
-				getScores = true;
-				//simul
+				simulationLoop(currentMatch, turn);
+			}else if(entry.equalsIgnoreCase("num")) {
+				System.out.println(currentMatch.boardToString(SHOW_FIELD_NUMBERS) + "\n");
+				System.out.println(currentMatch.boardToString(SHOW_PLAYERS) + "\n");
+				turn = turn-1;
 			}else {
-				snakesAndLadders.getMatch().movePlayers(turn,snakesAndLadders.getMatch().getFieldAmount());
-				snakesAndLadders.getMatch().boardToString(snakesAndLadders.getMatch().getFirst(), snakesAndLadders.getMatch().getFieldAmount(), true);
-				getScores = true;
+				currentMatch.movePlayers(turn, currentMatch.getFieldAmount());
+				System.out.println(currentMatch.boardToString(SHOW_PLAYERS) + "\n");
 			}
-			getScores = gameLoop(turn+1);
+			saveScore = executeGameLoop(currentMatch, turn+1);
+		}else {
+			if(!(currentMatch.getWinner() == null)) {
+				saveScore = true;
+			}
 		}
-		return getScores;
+		return saveScore;
 	}
-
-
 	
-	public void simulation() {
-		
+	public void simulationLoop(Match currentMatch, int turn) {
+		if(!currentMatch.hasEnded()) {
+			currentMatch.movePlayers(turn, currentMatch.getFieldAmount());
+			System.out.println(currentMatch.boardToString(SHOW_PLAYERS) + "\n");
+			simulationLoop(currentMatch, turn+1);
+		}
 	}
-
-	public void doOperation(int choice, Match match) {
-		switch (choice){
-		case PLAY:
-			start();
-			break;
-		case SCORE_BOARD:
-			break;
-		case EXIT:
-			break;
-		default: 
-			System.out.println("Opcion invalida, ingrese nuevamente");
-
+	
+	public void saveScore(boolean saveScore, Match currentMatch) {
+		if(saveScore) {
+			System.out.println("Enter your nickname.");
+			String name = sc.nextLine();
+			currentMatch.getWinner().setNickname(name);;
+			sal.addScores();
 		}
 	}
 
-
-	//HACERLO RECURSIVO
-	public void startProgram() {
-		int option;
-		do{
-			showMenu();
-			option = readOption();
-			doOperation(option,snakesAndLadders.getMatch());
-		}while (option!=3);
+	public void showScores() {
+		System.out.println(sal.getScores());
 	}
+	
+	public SnakesAndLadders getSal() {
+		return sal;
+	}
+
+	public void setSal(SnakesAndLadders sal) {
+		this.sal = sal;
+	}
+
 }

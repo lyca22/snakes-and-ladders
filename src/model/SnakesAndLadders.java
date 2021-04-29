@@ -42,18 +42,20 @@ public class SnakesAndLadders {
 
 	public String getScores(Player current) {
 		String text = "";
-		if(current.getLeft() == null && current.getRight() == null) {
-			text += current.getScore() + " ";
-		}else if(current.getLeft() == null) {
-			text += current.getScore() + " ";
-			text += getScores(current.getRight());
-		}else if(current.getRight() == null){
-			text += getScores(current.getLeft());
-			text += current.getScore() + " ";
-		}else {
-			text += getScores(current.getLeft());
-			text += current.getScore() + " ";
-			text += getScores(current.getRight());
+		if(current != null) {
+			if(current.getLeft() == null && current.getRight() == null) {
+				text += current.getNickname() + "(" + current.getSymbol()+ "): " + current.getScore() + "\n";
+			}else if(current.getLeft() == null) {
+				text += current.getNickname() + "(" + current.getSymbol()+ "): " + current.getScore() + "\n";
+				text += getScores(current.getRight());
+			}else if(current.getRight() == null){
+				text += getScores(current.getLeft());
+				text += current.getNickname() + "(" + current.getSymbol()+ "): " + current.getScore() + "\n";
+			}else {
+				text += getScores(current.getLeft());
+				text += current.getNickname() + "(" + current.getSymbol()+ "): " + current.getScore() + "\n";
+				text += getScores(current.getRight());
+			}
 		}
 		return text;
 	}
