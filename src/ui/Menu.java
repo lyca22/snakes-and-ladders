@@ -175,6 +175,10 @@ public class Menu {
 				}
 			}
 			System.out.println("Player "+ currentMatch.getPlayer(currentMatch.getFirstPlayer(), position).getSymbol() +" moved " + moves + " tiles.\n");
+			try {
+				Thread.sleep(2000);
+			} catch (InterruptedException e) {
+			}
 			simulationLoop(currentMatch, turn+1);
 		}
 	}
