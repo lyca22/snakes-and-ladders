@@ -163,7 +163,7 @@ public class Match {
 		return lastPlayer;
 	}
 
-	public void movePlayers(int turn, int fieldAmount) {
+	public int movePlayers(int turn, int fieldAmount) {
 		int position = turn;
 		if(turn > playerAmount) {
 			if(turn%playerAmount == 0) {
@@ -175,6 +175,7 @@ public class Match {
 		Player actualPlayer = getPlayer(firstPlayer, position);
 		int moves = randomNumberWithRange(MIN_MOVE_VALUE, MAX_MOVE_VALUE);
 		movePlayer(actualPlayer, moves+1, fieldAmount);
+		return moves;
 	}
 
 	public void movePlayer(Player player, int moves, int fieldAmount) {

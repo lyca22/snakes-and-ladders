@@ -35,7 +35,7 @@ public class Menu {
 		String text = "1. Play the game.\n";
 		text += "2. Show scoreboard.\n";
 		text += "3. Exit the game.\n\n";
-		text += "Please select an option.\n";
+		text += "Please enter an option.\n";
 		System.out.println(text);
 	}
 
@@ -45,7 +45,7 @@ public class Menu {
 			option = Integer.valueOf(sc.nextLine());
 		}catch(Exception e) {
 			option = -1;
-			System.out.println("Please select an option. Press any key to continue.\n");
+			System.out.println("Please select an option. Press enter to continue.\n");
 			sc.nextLine();
 		}
 		return option;
@@ -57,8 +57,7 @@ public class Menu {
 			try {
 				startGame();
 			} catch (Exception e) {
-				e.printStackTrace();
-				System.out.println("Please enter the required information. Press any key to continue.\n");
+				System.out.println("Please enter the required information. Press enter to continue.\n");
 				sc.nextLine();
 			}
 			break;
@@ -66,7 +65,7 @@ public class Menu {
 			showScores();
 			break;
 		case EXIT:
-			System.out.println("Game closed. Press any key to continue.\n");
+			System.out.println("Game closed. Press enter to continue.\n");
 			sc.nextLine();
 			break;
 		}
@@ -141,8 +140,9 @@ public class Menu {
 				System.out.println(currentMatch.boardToString(SHOW_PLAYERS) + "\n");
 				turn = turn-1;
 			}else {
-				currentMatch.movePlayers(turn, currentMatch.getFieldAmount());
+				int moves = currentMatch.movePlayers(turn, currentMatch.getFieldAmount());
 				System.out.println(currentMatch.boardToString(SHOW_PLAYERS) + "\n");
+				System.out.println("You moved " + moves + " tiles.\n");
 			}
 			saveScore = executeGameLoop(currentMatch, turn+1);
 		}else {
@@ -155,8 +155,9 @@ public class Menu {
 	
 	public void simulationLoop(Match currentMatch, int turn) {
 		if(!currentMatch.hasEnded()) {
-			currentMatch.movePlayers(turn, currentMatch.getFieldAmount());
+			int moves = currentMatch.movePlayers(turn, currentMatch.getFieldAmount());
 			System.out.println(currentMatch.boardToString(SHOW_PLAYERS) + "\n");
+			System.out.println("You moved " + moves + " tiles.\n");
 			simulationLoop(currentMatch, turn+1);
 		}
 	}
@@ -167,6 +168,8 @@ public class Menu {
 			String name = sc.nextLine();
 			currentMatch.getWinner().setNickname(name);;
 			sal.addScores();
+			System.out.println("\nScore saved. Press enter to continue.");
+			sc.nextLine();
 		}
 	}
 
