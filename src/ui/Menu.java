@@ -181,7 +181,7 @@ public class Menu {
 
 	public void saveScore(boolean saveScore, Match currentMatch) {
 		if(saveScore) {
-			System.out.println("The player with the symbol " + currentMatch.getWinner().getSymbol() + " won the game!");
+			System.out.println("The player with the symbol " + currentMatch.getWinner().getSymbol() + " won the game, with "+ currentMatch.getWinner().getMoves() + " moves!");
 			System.out.println("Enter your nickname.");
 			String name = sc.nextLine();
 			currentMatch.getWinner().setNickname(name);
