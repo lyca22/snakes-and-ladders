@@ -13,7 +13,7 @@ public class Menu {
 	private final static int FIRST_TURN = 1;
 	private final static boolean SHOW_FIELD_NUMBERS = false;
 	private final static boolean SHOW_PLAYERS = true;
-	
+
 	private SnakesAndLadders sal;
 	private Scanner sc;
 
@@ -57,6 +57,7 @@ public class Menu {
 			try {
 				startGame();
 			} catch (Exception e) {
+				e.printStackTrace();
 				System.out.println("Please enter the required information. Press enter to continue.\n");
 				sc.nextLine();
 			}
@@ -76,6 +77,7 @@ public class Menu {
 		Match currentMatch = sal.getMatch();
 		System.out.println("\n" + currentMatch.boardToString(SHOW_FIELD_NUMBERS) + "\n");
 		System.out.println(currentMatch.boardToString(SHOW_PLAYERS)+ "\n");
+		System.out.println("Press enter to make a move, enter 'menu' to end the game and go to the menu, enter 'simul' to enable simulation mode, enter num to see the numerated board.");
 		boolean saveScore = executeGameLoop(currentMatch, FIRST_TURN);
 		saveScore(saveScore, currentMatch);
 	}
@@ -123,11 +125,10 @@ public class Menu {
 			addPlayers(symbols, playerAmount-1, index+1);
 		}
 	}
-	
+
 	public boolean executeGameLoop(Match currentMatch, int turn) {
 		boolean saveScore = false;
 		if(!currentMatch.hasEnded()) {
-			System.out.println("Press enter to make a move, enter 'menu' to end the game and go to the menu, enter 'simul' to enable simulation mode, enter num to see the numerated board.");
 			String entry = sc.nextLine();
 			if(entry.equalsIgnoreCase("menu")) {
 				currentMatch.setHasEnded(true);
@@ -142,7 +143,15 @@ public class Menu {
 			}else {
 				int moves = currentMatch.movePlayers(turn, currentMatch.getFieldAmount());
 				System.out.println(currentMatch.boardToString(SHOW_PLAYERS) + "\n");
-				System.out.println("Player "+ currentMatch.getPlayer(currentMatch.getFirstPlayer(),turn).getSymbol() +" moved " + moves + " tiles.\n");
+				int position = turn;
+				if(turn > currentMatch.getPlayerAmount()) {
+					if(turn%currentMatch.getPlayerAmount() == 0) {
+						position = currentMatch.getPlayerAmount();
+					}else {
+						position = turn%currentMatch.getPlayerAmount();
+					}
+				}
+				System.out.println("Player "+ currentMatch.getPlayer(currentMatch.getFirstPlayer(), position).getSymbol() +" moved " + moves + " tiles.\n");
 			}
 			saveScore = executeGameLoop(currentMatch, turn+1);
 		}else {
@@ -152,21 +161,30 @@ public class Menu {
 		}
 		return saveScore;
 	}
-	
+
 	public void simulationLoop(Match currentMatch, int turn) {
 		if(!currentMatch.hasEnded()) {
 			int moves = currentMatch.movePlayers(turn, currentMatch.getFieldAmount());
 			System.out.println(currentMatch.boardToString(SHOW_PLAYERS) + "\n");
-			System.out.println("Player "+ currentMatch.getPlayer(currentMatch.getFirstPlayer(),turn).getSymbol() +" moved " + moves + " tiles.\n");
+			int position = turn;
+			if(turn > currentMatch.getPlayerAmount()) {
+				if(turn%currentMatch.getPlayerAmount() == 0) {
+					position = currentMatch.getPlayerAmount();
+				}else {
+					position = turn%currentMatch.getPlayerAmount();
+				}
+			}
+			System.out.println("Player "+ currentMatch.getPlayer(currentMatch.getFirstPlayer(), position).getSymbol() +" moved " + moves + " tiles.\n");
 			simulationLoop(currentMatch, turn+1);
 		}
 	}
-	
+
 	public void saveScore(boolean saveScore, Match currentMatch) {
 		if(saveScore) {
+			System.out.println("The player with the symbol " + currentMatch.getWinner().getSymbol() + " won the game!");
 			System.out.println("Enter your nickname.");
 			String name = sc.nextLine();
-			currentMatch.getWinner().setNickname(name);;
+			currentMatch.getWinner().setNickname(name);
 			sal.addScores();
 			System.out.println("\nScore saved. Press enter to continue.");
 			sc.nextLine();
@@ -176,7 +194,7 @@ public class Menu {
 	public void showScores() {
 		System.out.println(sal.getScores());
 	}
-	
+
 	public SnakesAndLadders getSal() {
 		return sal;
 	}
