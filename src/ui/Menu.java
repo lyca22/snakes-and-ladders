@@ -127,7 +127,7 @@ public class Menu {
 	public boolean executeGameLoop(Match currentMatch, int turn) {
 		boolean saveScore = false;
 		if(!currentMatch.hasEnded()) {
-			System.out.println("Press enter to make a move, enter 'menu' to end the game and go to the menu, enter simul to enable simulation mode, enter num to see the numerated board.");
+			System.out.println("Press enter to make a move, enter 'menu' to end the game and go to the menu, enter 'simul' to enable simulation mode, enter num to see the numerated board.");
 			String entry = sc.nextLine();
 			if(entry.equalsIgnoreCase("menu")) {
 				currentMatch.setHasEnded(true);
@@ -142,7 +142,7 @@ public class Menu {
 			}else {
 				int moves = currentMatch.movePlayers(turn, currentMatch.getFieldAmount());
 				System.out.println(currentMatch.boardToString(SHOW_PLAYERS) + "\n");
-				System.out.println("You moved " + moves + " tiles.\n");
+				System.out.println("Player "+ currentMatch.getPlayer(currentMatch.getFirstPlayer(),turn).getSymbol() +" moved " + moves + " tiles.\n");
 			}
 			saveScore = executeGameLoop(currentMatch, turn+1);
 		}else {
@@ -157,7 +157,7 @@ public class Menu {
 		if(!currentMatch.hasEnded()) {
 			int moves = currentMatch.movePlayers(turn, currentMatch.getFieldAmount());
 			System.out.println(currentMatch.boardToString(SHOW_PLAYERS) + "\n");
-			System.out.println("You moved " + moves + " tiles.\n");
+			System.out.println("Player "+ currentMatch.getPlayer(currentMatch.getFirstPlayer(),turn).getSymbol() +" moved " + moves + " tiles.\n");
 			simulationLoop(currentMatch, turn+1);
 		}
 	}
