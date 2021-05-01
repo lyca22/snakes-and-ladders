@@ -1,7 +1,7 @@
 snakes-and-ladders (for Windows)
 ------------
 
- Authors: Laura Daniela Martínez & Ariel Eduardo Pabón (lyca22)
+Authors: Laura Daniela Martínez & Ariel Eduardo Pabón (lyca22)
 
 This software was built using Java 8.
 
@@ -32,13 +32,13 @@ How to use?
 
 Once you boot up the program, you'll see the menu's options and you'll be able to enter commands to interact with the game:
 
-|While in menu|
+## While in menu
 
 -Enter '1' to start a game.
 -Enter '2' to see the scoreboards.
 -Enter '3' to exit the program.
 
-|Starting the game|
+## Starting the game
 
 After choosing the option of starting a game, the program will ask you to enter the following parameters between spaces:
 
@@ -57,10 +57,10 @@ Things to keep in mind:
 -Choosing the symbols yourself will allow you to have as many players as you want. Choosing a number of players will limit the amount of players to 9.
 -The maximum amount of snakes you can have in a match is 26. Same with the ladders.
 
-|Playing the game|
+## Playing the game
 
 Once you start the game, the program will show you 2 boards, for example:
-
+<pre>
 [ 1 ][ 2 ][ 3A]
 [ 6A][ 5 ][ 41]
 [ 71][ 8 ][ 9 ]
@@ -68,7 +68,7 @@ Once you start the game, the program will show you 2 boards, for example:
 [*! ][   ][  A]
 [  A][   ][  1]
 [  1][   ][   ]
-
+</pre>
 The first one shows you the board with each field number, and it will appear just once (unless you enter a command, see the next section to see all the commands you can do).
 The second board will appear everytime a player makes a move, showing their current position.
 Both boards show you the snakes (represented by capital letters on the board) and ladders (represented by the numbers on the board). These will always appear in the right of each field.
@@ -80,11 +80,11 @@ Commands:
 -Enter 'simul' to enable simulation mode.
 -Enter 'num' to show the board with field numbers.
 
-|Moving|
+## Moving
 
 -The players will move between 1 and 6 fields everytime they press enter without inputing anything.
 -If you entered a number for the player amount, they'll always move in this order:
-
+<pre>
 * - First
 ! - Second
 O - Third
@@ -94,18 +94,18 @@ $ - Sixth
 # - Seventh
 + - Eigthth
 & - Nineth
-
+</pre>
 -If you entered your own symbols, the players will always move in the order you entered the symbols, for example:
-
+<pre>
 input : '!@#$'
 
 ! - First
 @ - Second
 # - Third
 $ - Fourth
-
+</pre>
 -If you fall in a field with a snake, you'll go down through it and your new position will be the snake's end, for example:
-
+<pre>
 [ 1 ][ 2 ][ 3A]
 [ 6A][ 5 ][ 41]
 [ 71][ 8 ][ 9 ]
@@ -113,22 +113,22 @@ $ - Fourth
 [*! ][   ][  A]
 [  A][   ][  1]
 [  1][   ][   ]
-
+</pre>
 Here * is gonna move, let's say he gets a 5:
-
+<pre>
 [ ! ][   ][  A]
 [ *A][   ][  1]
 [  1][   ][   ]
-
+</pre>
 Normally he would end in that field, but since he fell into a snake, he will go through the snake and his new position will be this one:
-
+<pre>
 [ ! ][   ][ *A]
 [  A][   ][  1]
 [  1][   ][   ]
-
+</pre>
 
 -If you fall in a field with a ladder, you'll go down through it and your new position will be the ladders's end, for example:
-
+<pre>
 [ 1 ][ 2 ][ 32]
 [ 62][ 5 ][ 41]
 [ 71][ 8 ][ 9 ]
@@ -136,28 +136,28 @@ Normally he would end in that field, but since he fell into a snake, he will go 
 [*! ][   ][  2]
 [  2][   ][  1]
 [  1][   ][   ]
-
+</pre>
 Here * is gonna move, let's say he gets a 2:
-
+<pre>
 [ ! ][   ][ *2]
 [  2][   ][  1]
 [  1][   ][   ]
-
+</pre>
 Normally he would end in that field, but since he fell into a ladder, he will go through the ladder and his new position will be this one:
-
+<pre>
 [ ! ][   ][  2]
 [ *2][   ][  1]
 [  1][   ][   ]
-
+</pre>
 
 -If you fall in the last field, you win the game.
 
-|Simulation mode|
+## Simulation mode
 
 -In any point in the match, a player can enter 'simul' to enable the simulation mode.
 -The game will start making moves every 2 seconds without the need of pressing enter until the game ends.
 
-|Seeing the scoreboard|
+## Seeing the scoreboard
 
 -While in the menu, the user can enter '2' to see the scoreboard.
 -The scoreboard will contain the following information of the match:
@@ -170,12 +170,12 @@ Normally he would end in that field, but since he fell into a ladder, he will go
 -The symbols of each player besides the winner.
 
 For example:
-
-'Match winner: Lyca(*) | Winner's score: 18 | Board width: 3 | Board length: 3 | Snakes: 1 | Ladders: 1 | Player amount: 2 | Remaining player symbols: !
+<pre>
+Match winner: Lyca(*) | Winner's score: 18 | Board width: 3 | Board length: 3 | Snakes: 1 | Ladders: 1 | Player amount: 2 | Remaining player symbols: !
 Match winner: Laura(!) | Winner's score: 8 | Board width: 2 | Board length: 2 | Snakes: 1 | Ladders: 1 | Player amount: 2 | Remaining player symbols: *
 
-Press enter to continue'
-
+Press enter to continue
+</pre>
 
 Note
 ------------
