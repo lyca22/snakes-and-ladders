@@ -3,57 +3,53 @@ package model;
 public class SnakesAndLadders {
 
 	private Match match;
-	private Player root;
+	private Match root;
 
 	public SnakesAndLadders() {
 	}
-
+	
 	public void addScores() {
-		addScores(match.getWinner());
-	}
-
-	public void addScores(Player player) {
 		if(root == null) {
-			root = player;
+			root = match;
 		}else {
-			addScores(root, player);
+			addScores(root);
 		}
 	}
-
-	public void addScores(Player current, Player player) {
-		if(player.getScore() <= current.getScore()) {
-			if(current.getLeft() == null) {
-				current.setLeft(player);
-			}else {
-				addScores(current.getLeft(), player);
-			}
-		}else {
+	
+	public void addScores(Match current) {
+		if(match.getWinner().getScore() <= current.getWinner().getScore()) {
 			if(current.getRight() == null) {
-				current.setRight(player);
+				current.setRight(match);
 			}else {
-				addScores(current.getRight(), player);
+				addScores(current.getRight());
+			}
+		}else {
+			if(current.getLeft() == null) {
+				current.setLeft(match);
+			}else {
+				addScores(current.getLeft());
 			}
 		}
 	}
-
+	
 	public String getScores() {
 		return getScores(root);
 	}
 
-	public String getScores(Player current) {
+	public String getScores(Match current) {
 		String text = "";
 		if(current != null) {
 			if(current.getLeft() == null && current.getRight() == null) {
-				text += current.getNickname() + "(" + current.getSymbol()+ "): " + current.getScore() + "\n";
+				text += current.getWinner().getNickname() + "(" + current.getWinner().getSymbol()+ "): " + current.getWinner().getScore() + "\n";
 			}else if(current.getLeft() == null) {
-				text += current.getNickname() + "(" + current.getSymbol()+ "): " + current.getScore() + "\n";
+				text += current.getWinner().getNickname() + "(" + current.getWinner().getSymbol()+ "): " + current.getWinner().getScore() + "\n";
 				text += getScores(current.getRight());
 			}else if(current.getRight() == null){
 				text += getScores(current.getLeft());
-				text += current.getNickname() + "(" + current.getSymbol()+ "): " + current.getScore() + "\n";
+				text += current.getWinner().getNickname() + "(" + current.getWinner().getSymbol()+ "): " + current.getWinner().getScore() + "\n";
 			}else {
 				text += getScores(current.getLeft());
-				text += current.getNickname() + "(" + current.getSymbol()+ "): " + current.getScore() + "\n";
+				text += current.getWinner().getNickname() + "(" + current.getWinner().getSymbol()+ "): " + current.getWinner().getScore() + "\n";
 				text += getScores(current.getRight());
 			}
 		}
@@ -68,11 +64,11 @@ public class SnakesAndLadders {
 		this.match = match;
 	}
 
-	public Player getRoot() {
+	public Match getRoot() {
 		return root;
 	}
 
-	public void setRoot(Player root) {
+	public void setRoot(Match root) {
 		this.root = root;
 	}
 

@@ -19,6 +19,8 @@ public class Match {
 	private Player firstPlayer;
 	private boolean hasEnded;
 	private Player winner;
+	private Match right;
+	private Match left;
 
 	public Match(int boardWidth, int boardLength, int snakeAmount, int ladderAmount, int playerAmount) {
 		setBoardWidth(boardWidth);
@@ -351,6 +353,22 @@ public class Match {
 
 	public void setWinner(Player winner) {
 		this.winner = winner;
+	}
+
+	public Match getRight() {
+		return right;
+	}
+
+	public void setRight(Match right) {
+		this.right = right;
+	}
+
+	public Match getLeft() {
+		return left;
+	}
+
+	public void setLeft(Match left) {
+		this.left = left;
 	}
 
 }

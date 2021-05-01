@@ -6,8 +6,6 @@ public class Player {
 	private String nickname;
 	private int score;
 	private int moves;
-	private Player right;
-	private Player left;
 	private Player next;
 	private Field position;
 
@@ -53,23 +51,7 @@ public class Player {
 	public void setMoves(int moves) {
 		this.moves = moves;
 	}
-
-	public Player getRight() {
-		return right;
-	}
-
-	public void setRight(Player right) {
-		this.right = right;
-	}
-
-	public Player getLeft() {
-		return left;
-	}
-
-	public void setLeft(Player left) {
-		this.left = left;
-	}
-
+	
 	public Player getNext() {
 		return next;
 	}
