@@ -275,6 +275,22 @@ public class Match {
 		return text;
 	}
 
+	public String showNotWinnerSymbols() {
+		return showNotWinnerSymbols(firstPlayer);
+	}
+	
+	private String showNotWinnerSymbols(Player currentPlayer) {
+		String text = "";
+		if(currentPlayer != null) {
+			if(currentPlayer.getSymbol() != winner.getSymbol()) {
+				text += currentPlayer.getSymbol();
+			}
+			Player nextPlayer = currentPlayer.getNext();
+			text += showNotWinnerSymbols(nextPlayer);
+		}
+		return text;
+	}
+	
 	public int getBoardWidth() {
 		return boardWidth;
 	}
@@ -304,6 +320,9 @@ public class Match {
 	}
 
 	public void setSnakeAmount(int snakeAmount) {
+		if(snakeAmount > 26) {
+			snakeAmount = 26;
+		}
 		this.snakeAmount = snakeAmount;
 	}
 
@@ -312,6 +331,9 @@ public class Match {
 	}
 
 	public void setLadderAmount(int ladderAmount) {
+		if(ladderAmount > 26) {
+			ladderAmount = 26;
+		}
 		this.ladderAmount = ladderAmount;
 	}
 

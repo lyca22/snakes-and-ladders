@@ -40,22 +40,34 @@ public class SnakesAndLadders {
 		String text = "";
 		if(current != null) {
 			if(current.getLeft() == null && current.getRight() == null) {
-				text += current.getWinner().getNickname() + "(" + current.getWinner().getSymbol()+ "): " + current.getWinner().getScore() + "\n";
+				text += getScoreText(current);
 			}else if(current.getLeft() == null) {
-				text += current.getWinner().getNickname() + "(" + current.getWinner().getSymbol()+ "): " + current.getWinner().getScore() + "\n";
+				text += getScoreText(current);
 				text += getScores(current.getRight());
 			}else if(current.getRight() == null){
 				text += getScores(current.getLeft());
-				text += current.getWinner().getNickname() + "(" + current.getWinner().getSymbol()+ "): " + current.getWinner().getScore() + "\n";
+				text += getScoreText(current);
 			}else {
 				text += getScores(current.getLeft());
-				text += current.getWinner().getNickname() + "(" + current.getWinner().getSymbol()+ "): " + current.getWinner().getScore() + "\n";
+				text += getScoreText(current);
 				text += getScores(current.getRight());
 			}
 		}
 		return text;
 	}
 
+	private String getScoreText(Match current) {
+		String text = "Match winner: " + current.getWinner().getNickname() + "(" + current.getWinner().getSymbol()+ ") |";
+		text += " Winner's score: " + current.getWinner().getScore() + " |";
+		text += " Board width: " + current.getBoardWidth() + " |";
+		text += " Board length: " + current.getBoardLength() + " |";
+		text += " Snakes: " + current.getSnakeAmount() + " |";
+		text += " Ladders: " + current.getLadderAmount() + " |";
+		text += " Player amount: " + current.getPlayerAmount() + " |";
+		text += " Remaining player symbols: " + current.showNotWinnerSymbols() + "\n";
+		return text;
+	}
+	
 	public Match getMatch() {
 		return match;
 	}

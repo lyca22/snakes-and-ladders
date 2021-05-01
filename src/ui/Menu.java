@@ -197,6 +197,8 @@ public class Menu {
 
 	public void showScores() {
 		System.out.println(sal.getScores());
+		System.out.println("Press enter to continue.");
+		sc.nextLine();
 	}
 
 	public SnakesAndLadders getSal() {
