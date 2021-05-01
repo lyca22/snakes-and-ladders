@@ -9,12 +9,27 @@ public class Player {
 	private Player next;
 	private Field position;
 
+
+	/**
+	 *Constructor method for Player. <br>
+	 *<b>Pre: </b>  <br>
+	 *<b>Post: </b> Creates a player <br>
+	 *@param symbol It is the symbol that represents each player. <br>
+	 */
+
 	public Player(char symbol) {
 		setSymbol(symbol);
 		setNickname("");
 		setScore(0);
 		setMoves(0);
 	}
+
+	/**
+	 *Calculate the score. <br>
+	 *<b>Pre: </b>  <br>
+	 *<b>Post: </b> Return the score. <br>
+	 *@param fieldAmount It is the number of fields on the current board. <br>
+	 */
 
 	public int calculateScore(int fieldAmount) {
 		return fieldAmount*moves;
@@ -51,7 +66,7 @@ public class Player {
 	public void setMoves(int moves) {
 		this.moves = moves;
 	}
-	
+
 	public Player getNext() {
 		return next;
 	}

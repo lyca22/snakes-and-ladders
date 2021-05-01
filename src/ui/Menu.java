@@ -22,6 +22,13 @@ public class Menu {
 		sc = new Scanner(System.in);
 	}
 
+
+	/**
+	 *Groups all the methods needed to make the program work. <br>
+	 *<b>Pre: </b>  <br>
+	 *<b>Post: </b> Starts the program using showMenu() and doOperation().  <br>
+	 */
+
 	public void startProgram() {
 		showMenu();
 		int option = readOption();
@@ -31,6 +38,13 @@ public class Menu {
 		}
 	}
 
+
+	/**
+	 *Shows the menu to the user. <br>
+	 *<b>Pre: </b>  <br>
+	 *<b>Post: </b> Shows all the options available. <br>
+	 */
+
 	public void showMenu() {
 		String text = "1. Play the game.\n";
 		text += "2. Show scoreboard.\n";
@@ -38,6 +52,13 @@ public class Menu {
 		text += "Please enter an option.\n";
 		System.out.println(text);
 	}
+
+
+	/**
+	 *Reads the option of the user to select an option. <br>
+	 *<b>Pre: </b> The user has to enter a number between 1 and 3. <br>
+	 *<b>Post: </b> The option will be saved. <br>
+	 */
 
 	public int readOption() {
 		int option;
@@ -50,6 +71,13 @@ public class Menu {
 		}
 		return option;
 	}
+
+	/**
+	 *Does an operation according to the user's input. <br>
+	 *<b>Pre: </b> The user has to choose an option. <br>
+	 *<b>Post: </b> It will do what the user wants. <br> 
+	 *@param option It is the choice of the user. <br> 
+	 */
 
 	public void doOperation(int option) {
 		switch(option) {
@@ -72,6 +100,13 @@ public class Menu {
 		}
 	}
 
+
+	/**
+	 *Starts the game with the given information. <br>
+	 *<b>Pre: </b> The user has to enter all the information needed. <br>
+	 *<b>Post: </b> Starts the game with the given information. <br> 
+	 */
+
 	public void startGame() throws Exception {
 		getGameInformation();
 		Match currentMatch = sal.getMatch();
@@ -81,6 +116,13 @@ public class Menu {
 		boolean saveScore = executeGameLoop(currentMatch, FIRST_TURN);
 		saveScore(saveScore, currentMatch);
 	}
+
+
+	/**
+	 *Creates a match with the given information (width, length, snake amount, ladder amount and player amount or their symbols). <br>
+	 *<b>Pre: </b> It's called in the startGame method. <br>
+	 *<b>Post: </b> Creates a match with the given information. <br> 
+	 */
 
 	public void getGameInformation() {
 		System.out.println("Enter width, length, snake amount, ladder amount and player amount or their symbols.");
@@ -109,6 +151,13 @@ public class Menu {
 		}
 	}
 
+
+	/**
+	 *Adds players to the current match. <br>
+	 *<b>Pre: </b> It's called in the getGameInformation method. <br>
+	 *<b>Post: </b> Adds players to the current match. <br> 
+	 */
+
 	public void addPlayers(String symbols, int playerAmount) {
 		addPlayers(symbols, playerAmount, 0);
 	}
@@ -125,6 +174,15 @@ public class Menu {
 			addPlayers(symbols, playerAmount-1, index+1);
 		}
 	}
+
+
+	/**
+	 *Allows the players to move on the current board and choose other game modes. <br>
+	 *<b>Pre: </b> The user has to enter all the information needed. <br>
+	 *<b>Post: </b> Returns the score saved. <br> 
+	 *@param currentMatch It is the current game. <br> 
+	 *@param turn It is the turn of each player. <br> 
+	 */
 
 	public boolean executeGameLoop(Match currentMatch, int turn) {
 		boolean saveScore = false;
@@ -162,6 +220,15 @@ public class Menu {
 		return saveScore;
 	}
 
+
+	/**
+	 *Starts the simulation mode. <br>
+	 *<b>Pre: </b> The user has to enter the word "simul" and it is called in the executeGameLoop method. <br>
+	 *<b>Post: </b> Starts the simulation mode. <br> 
+	 *@param currentMatch It is the current game. <br> 
+	 *@param turn It is the turn of each player. <br> 
+	 */
+
 	public void simulationLoop(Match currentMatch, int turn) {
 		if(!currentMatch.hasEnded()) {
 			int moves = currentMatch.movePlayers(turn, currentMatch.getFieldAmount());
@@ -183,6 +250,16 @@ public class Menu {
 		}
 	}
 
+
+	/**
+	 *Shows the winner and saves the score. <br>
+	 *<b>Pre: </b> It's called in the startGame method. <br>
+	 *<b>Post: </b> Shows the winner player and saves the score. <br> 
+	 *@param saveScore Indicates if the score was saved. <br> 
+	 *@param currentMatch It is the current game. <br>
+	 */
+
+
 	public void saveScore(boolean saveScore, Match currentMatch) {
 		if(saveScore) {
 			System.out.println("The player with the symbol " + currentMatch.getWinner().getSymbol() + " won the game, with "+ currentMatch.getWinner().getMoves() + " moves!");
@@ -194,6 +271,13 @@ public class Menu {
 			sc.nextLine();
 		}
 	}
+
+
+	/**
+	 * Shows the winner's score and the match's info. <br>
+	 * <b>Pre: </b> The match is over. <br>
+	 * <b>Post: </b> Shows the winner's score and the match's info. <br>
+	 */
 
 	public void showScores() {
 		System.out.println(sal.getScores());

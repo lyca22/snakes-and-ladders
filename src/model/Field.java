@@ -8,6 +8,13 @@ public class Field {
 	private Field ladder;
 	private Field parent;
 	private String symbol;
+	
+	/**
+	 *Constructor method for Field. <br>
+	 *<b>Pre: </b>  <br>
+	 *<b>Post: </b> Creates a field <br>
+	 *@param fieldNumber It is number of the field. <br>
+	 */
 
 	public Field(int fieldNumber) {
 		setFieldNumber(fieldNumber);
