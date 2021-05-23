@@ -11,6 +11,13 @@ You can download this software from: https://github.com/lyca22/snakes-and-ladder
 
 You can access the project's documentation from: https://drive.google.com/file/d/1wwjEYmkhBeI2_DPW1EjIM_yJmO_FTXuC/view?usp=sharing
 
+# Changelog
+------------
+### Added
+- New file called data.
+
+### Changed
+- Start using the correct tag "Milestone2" in order to fix the tag used for the first version.
 
 What is this software?
 ------------
