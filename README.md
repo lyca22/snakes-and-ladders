@@ -1,4 +1,4 @@
-snakes-and-ladders (for Windows)
+snakes-and-ladders
 ------------
 
 Authors: Laura Daniela Martínez & Ariel Eduardo Pabón (lyca22)
@@ -7,18 +7,9 @@ This software was built using Java 8.
 
 UI only supports English.
 
-You can download this software from: https://github.com/lyca22/snakes-and-ladders
+You can download this software from [this link.](https://github.com/lyca22/snakes-and-ladders)
 
-You can access the project's documentation from: https://drive.google.com/file/d/1wwjEYmkhBeI2_DPW1EjIM_yJmO_FTXuC/view?usp=sharing
-
-
-## Changelog
-------------
-###### Added
-- New file called data.
-
-###### Changed
-- Start using the correct tag "Milestone2" in order to fix the tag used for the first version.
+You can access the project's documentation from [this link](https://drive.google.com/file/d/1wwjEYmkhBeI2_DPW1EjIM_yJmO_FTXuC/view?usp=sharing) (Only available in Spanish).
 
 
 What is this software?
@@ -30,7 +21,7 @@ snakes-and-ladders is a software built to replicate the famous board game 'Snake
 Requirements
 ------------
 
-At least the following environment is required to run this software.
+At least the following environment is required to run this software:
 
  * OS: Any machine capable of using JVM.
  * Java (https://www.java.com/en/download/).
@@ -71,9 +62,9 @@ The line '7 4 2 2 @OX' will create a game with a 7x4 board, 2 snakes, 2 ladders 
 
 Things to keep in mind:
 
--Choosing the symbols yourself will allow you to have as many players as you want. Choosing a number of players will limit the amount of players to 9.
+-Choosing the symbols by yourself will allow you to have as many players as you want. Choosing a number of players will limit the amount of players to 9.
 
--The maximum amount of snakes you can have in a match is 26. Same with the ladders.
+-The maximum amount of snakes you can have in a match is 26. The same applies with the ladder amount.
 
 ## Playing the game
 
@@ -87,9 +78,9 @@ Once you start the game, the program will show you 2 boards, for example:
 [  A][   ][  1]
 [  1][   ][   ]
 </pre>
--The first one shows you the board with each field number, and it will appear just once (unless you enter a command, see the next section to see all the commands you can do).
+-The first one shows you the board with each field number. It will be displayed just once (unless you enter a specific command, see the next section to see all the commands you can do).
 
--The second board will appear everytime a player makes a move, showing their current position.
+-The second board will be displayed everytime a player makes a move, showing their current position.
 
 -Both boards show you the snakes (represented by capital letters on the board) and ladders (represented by the numbers on the board). These will always appear in the right of each field.
 
@@ -105,7 +96,7 @@ Commands:
 
 ## Moving
 
--The players will move between 1 and 6 fields everytime they press enter without inputing anything.
+-The players will move between 1 and 6 fields everytime they press enter without entering a command.
 
 -If you entered a number for the player amount, they'll always move in this order:
 
@@ -132,7 +123,7 @@ input : '!@#$'
 $ - Fourth
 </pre>
 
--If you fall in a field with a snake, you'll go down through it and your new position will be the snake's end, for example:
+-If you move to a field with a snake, you'll go down through it and your new position will be the snake's end, for example:
 
 <pre>
 [ 1 ][ 2 ][ 3A]
@@ -144,7 +135,7 @@ $ - Fourth
 [  1][   ][   ]
 </pre>
 
-Here * is gonna move, let's say he gets a 5:
+Here * is gonna move, let's say that player gets a 5:
 
 <pre>
 [ ! ][   ][  A]
@@ -152,7 +143,7 @@ Here * is gonna move, let's say he gets a 5:
 [  1][   ][   ]
 </pre>
 
-Normally he would end in that field, but since he fell into a snake, he will go through the snake and his new position will be this one:
+Normally the player would end in that field, but since they moved to a snake field, they'll go through the snake and their new position will be this one:
 
 <pre>
 [ ! ][   ][ *A]
@@ -160,7 +151,7 @@ Normally he would end in that field, but since he fell into a snake, he will go 
 [  1][   ][   ]
 </pre>
 
--If you fall in a field with a ladder, you'll go down through it and your new position will be the ladders's end, for example:
+-If you move to a field with a ladder, you'll go up through it and your new position will be the ladders's end, for example:
 
 <pre>
 [ 1 ][ 2 ][ 32]
@@ -172,7 +163,7 @@ Normally he would end in that field, but since he fell into a snake, he will go 
 [  1][   ][   ]
 </pre>
 
-Here * is gonna move, let's say he gets a 2:
+Here * is gonna move, let's say that player gets a 2:
 
 <pre>
 [ ! ][   ][ *2]
@@ -180,7 +171,7 @@ Here * is gonna move, let's say he gets a 2:
 [  1][   ][   ]
 </pre>
 
-Normally he would end in that field, but since he fell into a ladder, he will go through the ladder and his new position will be this one:
+Normally the player would end in that field, but since they moved to a ladder field, they'll go through the ladder and their new position will be this one:
 
 <pre>
 [ ! ][   ][  2]
@@ -188,7 +179,7 @@ Normally he would end in that field, but since he fell into a ladder, he will go
 [  1][   ][   ]
 </pre>
 
--If you fall in the last field, you win the game.
+-If you move to the last field, you win the game.
 
 ## Simulation mode
 
@@ -200,15 +191,15 @@ Normally he would end in that field, but since he fell into a ladder, he will go
 
 -While in the menu, the user can enter '2' to see the scoreboard.
 
--The scoreboard will contain the following information of the match:
+-The scoreboard will contain the following information of the previous matches:
 
 -The match's winner, his symbol and his score. This score is calculated by multiplying the number of moves the player did by the number of fields the board had.
 
 -Board width and length.
 
--Snake amount in the board.
+-Snake amount of the board.
 
--Ladder amount in the board.
+-Ladder amount of the board.
 
 -Player amount of the match.
 
@@ -219,7 +210,7 @@ For example:
 Match winner: Lyca(*) | Winner's score: 18 | Board width: 3 | Board length: 3 | Snakes: 1 | Ladders: 1 | Player amount: 2 | Remaining player symbols: !
 Match winner: Laura(!) | Winner's score: 8 | Board width: 2 | Board length: 2 | Snakes: 1 | Ladders: 1 | Player amount: 2 | Remaining player symbols: *
 
-Press enter to continue
+Press enter to continue.
 </pre>
 
 Note
@@ -235,4 +226,4 @@ The creator does not assume any obligation.
 Acknowledgment
 ------------
 
-Thanks to Juan Manuel Reyes for guiding us in the process of making this tiny program.
+Thanks to Juan Manuel Reyes for guiding us in the process of making this tiny game.
